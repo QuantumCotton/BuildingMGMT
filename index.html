@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMJK PropertyOps - Property Management Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <h1 class="property-name">KMJK PropertyOps</h1>
+            <div class="property-address">[Property Name / Address]</div>
+            <div class="last-updated">Last Updated: <span id="lastUpdated">Just now</span></div>
+        </div>
+        <div class="header-right">
+            <div class="quick-actions">
+                <button class="btn-primary" onclick="showNewTicketModal()">
+                    <i class="fas fa-plus"></i> New Ticket
+                </button>
+                <button class="btn-secondary" onclick="showNewInspectionModal()">
+                    <i class="fas fa-clipboard-check"></i> New Inspection
+                </button>
+                <button class="btn-secondary" onclick="showUploadModal()">
+                    <i class="fas fa-upload"></i> Upload Media
+                </button>
+                <button class="btn-secondary" onclick="showExportModal()">
+                    <i class="fas fa-download"></i> Export Report
+                </button>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search tickets, inspections, assets..." id="globalSearch">
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="overview">
+                    <a href="#" onclick="navigateTo('overview')">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Overview</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="map-buildings">
+                    <a href="#" onclick="navigateTo('map-buildings')">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>Map & Buildings</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="tickets">
+                    <a href="#" onclick="navigateTo('tickets')">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Tickets</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="inspections">
+                    <a href="#" onclick="navigateTo('inspections')">
+                        <i class="fas fa-clipboard-check"></i>
+                        <span>Inspections</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="storm-events">
+                    <a href="#" onclick="navigateTo('storm-events')">
+                        <i class="fas fa-cloud-bolt"></i>
+                        <span>Storm Events</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="assets">
+                    <a href="#" onclick="navigateTo('assets')">
+                        <i class="fas fa-tools"></i>
+                        <span>Assets & Systems</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="vendors">
+                    <a href="#" onclick="navigateTo('vendors')">
+                        <i class="fas fa-users"></i>
+                        <span>Vendors</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="photos">
+                    <a href="#" onclick="navigateTo('photos')">
+                        <i class="fas fa-images"></i>
+                        <span>Photos & Files</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="reports">
+                    <a href="#" onclick="navigateTo('reports')">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Reports & Exports</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-page="hours">
+                    <a href="#" onclick="navigateTo('hours')">
+                        <i class="fas fa-clock"></i>
+                        <span>Hours & Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item admin-only" data-page="settings">
+                    <a href="#" onclick="navigateTo('settings')">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content" id="mainContent">
+            <!-- Content will be dynamically loaded here -->
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="modalOverlay" class="modal-overlay"></div>
+    
+    <!-- New Ticket Modal -->
+    <div id="newTicketModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Ticket</h3>
+                <button class="close-btn" onclick="closeModal('newTicketModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="newTicketForm">
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="ticketPriority">
+                            <option value="P0">P0 - Safety Critical</option>
+                            <option value="P1">P1 - Urgent</option>
+                            <option value="P2">P2 - Normal</option>
+                            <option value="P3">P3 - Low Priority</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="ticketCategory">
+                            <option value="roofing">Roofing</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="electrical">Electrical</option>
+                            <option value="hvac">HVAC</option>
+                            <option value="drywall">Drywall</option>
+                            <option value="landscaping">Landscaping</option>
+                            <option value="trash">Trash/Grounds</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <select id="ticketBuilding">
+                            <option value="">Select Building</option>
+                        </select>
+                        <input type="text" placeholder="Unit/Zone" id="ticketUnit">
+                    </div>
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" id="ticketTitle" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="ticketDescription" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Assign To</label>
+                        <select id="ticketAssignee">
+                            <option value="">Unassigned</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeModal('newTicketModal')">Cancel</button>
+                <button type="button" class="btn-primary" onclick="createTicket()">Create Ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
