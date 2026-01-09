@@ -86,6 +86,34 @@ function loadSampleData() {
     propertyData.tickets = [
         {
             id: 'T001',
+            priority: 'P0',
+            category: 'plumbing',
+            building: 'RS1',
+            unit: 'Unit 3',
+            title: 'EMERGENCY: Main water line leak repair - 2AM emergency call',
+            description: 'Tenant called at 2AM with active water leak from main supply line under kitchen sink. Water flooding kitchen and spreading to living room. Emergency shut-off completed, but pipe section needs replacement. Josue on-site now, waiting for pipe supply store to open at 7AM to get replacement parts.',
+            status: 'in_progress',
+            assignee: 'Josue',
+            created: new Date('2026-01-09T02:00:00'),
+            dueDate: new Date('2026-01-09T15:00:00'),
+            estimatedCost: 450,
+            evidence: { photos: 5, videos: 1 },
+            workSessions: [
+                { date: new Date('2026-01-09T02:00:00'), hours: 2, notes: 'Emergency call received, drove to property, shut off main water supply, assessed damage' },
+                { date: new Date('2026-01-09T04:00:00'), hours: 1.5, notes: 'Water extraction and cleanup, temporary patch applied, prepared area for repair' },
+                { date: new Date('2026-01-09T06:30:00'), hours: 0.5, notes: 'Final assessment, identified exact pipe section needed, waiting for supply store to open' }
+            ],
+            materials: [
+                { item: 'Copper Pipe Section', quantity: 1, unit: 'piece', cost: 35.00, status: 'TO PURCHASE' },
+                { item: 'Pipe Fittings ( elbows, couplings)', quantity: 4, unit: 'pieces', cost: 12.00, status: 'TO PURCHASE' },
+                { item: 'Solder & Flux', quantity: 1, unit: 'kit', cost: 25.00, status: 'ON HAND' },
+                { item: 'Pipe Cutter', quantity: 1, unit: 'tool', cost: 0, status: 'ON HAND' },
+                { item: 'Water Extraction Equipment Rental', quantity: 2, unit: 'hours', cost: 75.00, status: 'COMPLETED' }
+            ],
+            notes: 'Tenant displaced temporarily due to water damage. Need to coordinate with tenant for final repair completion this afternoon. Emergency service rate applies.'
+        },
+        {
+            id: 'T002',
             priority: 'P1',
             category: 'flooring',
             building: 'AL1',
@@ -109,11 +137,11 @@ function loadSampleData() {
             ]
         },
         {
-            id: 'T002',
+            id: 'T003',
             priority: 'P2',
             category: 'plumbing',
             building: 'RS1',
-            unit: 'Unit 3',
+            unit: 'Unit 1',
             title: 'Kitchen sink drain replacement',
             description: 'Tenant reports slow draining sink, needs new P-trap and drain assembly',
             status: 'assigned',
@@ -124,8 +152,8 @@ function loadSampleData() {
             evidence: { photos: 2, videos: 0 }
         },
         {
-            id: 'T003',
-            priority: 'P0',
+            id: 'T004',
+            priority: 'P1',
             category: 'electrical',
             building: 'NW1',
             unit: 'Unit 1',
@@ -139,7 +167,7 @@ function loadSampleData() {
             evidence: { photos: 1, videos: 0 }
         },
         {
-            id: 'T004',
+            id: 'T005',
             priority: 'P2',
             category: 'hvac',
             building: 'LM1',
@@ -159,6 +187,17 @@ function loadSampleData() {
     propertyData.inspections = [
         {
             id: 'I001',
+            type: 'Emergency Follow-up Inspection',
+            building: '4341 Riverside Dr',
+            unit: 'Unit 3',
+            status: 'scheduled',
+            scheduledDate: new Date('2026-01-09T16:00:00'),
+            score: null,
+            nextDue: new Date('2026-01-09T16:00:00'),
+            notes: 'Follow-up inspection after emergency plumbing repair. Verify no water damage, check for mold potential, ensure proper cleanup.'
+        },
+        {
+            id: 'I002',
             type: 'Weekly Grounds Walkthrough',
             building: 'All Properties',
             status: 'completed',
@@ -168,7 +207,7 @@ function loadSampleData() {
             notes: 'All properties clean, minor trash issue at 624 Allen Ave resolved'
         },
         {
-            id: 'I002',
+            id: 'I003',
             type: 'Monthly Building Envelope Check',
             building: '4341 Riverside Dr',
             status: 'scheduled',
@@ -178,7 +217,7 @@ function loadSampleData() {
             notes: 'Check roof, gutters, and exterior walls after recent rain'
         },
         {
-            id: 'I003',
+            id: 'I004',
             type: 'Unit Turn Inspection',
             building: '624 Allen Ave',
             unit: 'Unit 2',
@@ -589,8 +628,11 @@ function createTicketCard(ticket) {
     const building = propertyData.buildings.find(b => b.id === ticket.building);
     const buildingName = building ? building.name : ticket.building;
     
+    // Add emergency class for P0 plumbing emergencies
+    const emergencyClass = ticket.priority === 'P0' && ticket.category === 'plumbing' ? 'emergency' : '';
+    
     return `
-        <div class="ticket-card priority-${ticket.priority}" onclick="openTicketDetail('${ticket.id}')">
+        <div class="ticket-card priority-${ticket.priority} ${emergencyClass}" onclick="openTicketDetail('${ticket.id}')">
             <div class="ticket-header">
                 <span class="priority-badge ${ticket.priority}">${ticket.priority}</span>
                 <span class="ticket-category">${ticket.category}</span>
@@ -613,11 +655,14 @@ function createTicketCard(ticket) {
 
 function generateActivityFeed() {
     const activities = [
-        { type: 'ticket', title: 'New ticket created: T001 - Active ceiling leak', time: '2 hours ago', user: 'System' },
-        { type: 'inspection', title: 'Weekly grounds walkthrough completed', time: '4 hours ago', user: 'John Smith' },
-        { type: 'upload', title: '3 photos uploaded to T001', time: '5 hours ago', user: 'John Smith' },
-        { type: 'ticket', title: 'T003 assigned to Mike Johnson', time: '6 hours ago', user: 'Admin' },
-        { type: 'inspection', title: 'Monthly building envelope check scheduled', time: '1 day ago', user: 'System' }
+        { type: 'ticket', title: 'EMERGENCY T001: Main water line leak at 4341 Riverside Dr - 2AM emergency call', time: '4 hours ago', user: 'System' },
+        { type: 'ticket', title: 'T001 water extraction and cleanup completed', time: '2 hours ago', user: 'Josue' },
+        { type: 'ticket', title: 'T001 temporary patch applied, waiting for parts store to open', time: '1 hour ago', user: 'Josue' },
+        { type: 'inspection', title: 'Emergency follow-up inspection scheduled for 4PM today', time: '30 minutes ago', user: 'Chris' },
+        { type: 'upload', title: '5 photos uploaded to T001 - water damage documentation', time: '2 hours ago', user: 'Josue' },
+        { type: 'upload', title: '1 video uploaded to T001 - leak source documentation', time: '2 hours ago', user: 'Josue' },
+        { type: 'ticket', title: 'T002 Five-Star Flooring work session completed', time: '1 day ago', user: 'Josue' },
+        { type: 'inspection', title: 'Weekly grounds walkthrough completed', time: '4 days ago', user: 'Josue' }
     ];
     
     return activities.map(activity => `
@@ -776,6 +821,7 @@ function openTicketDetail(ticketId) {
                                         <th>Quantity</th>
                                         <th>Unit Cost</th>
                                         <th>Total</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -785,6 +831,7 @@ function openTicketDetail(ticketId) {
                                             <td>${material.quantity} ${material.unit}</td>
                                             <td>$${material.cost}</td>
                                             <td>$${(material.quantity * material.cost).toFixed(2)}</td>
+                                            <td><span class="materials-status ${material.status.toLowerCase().replace(' ', '-')}">${material.status}</span></td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
