@@ -999,7 +999,130 @@ body {
     color: #721c24;
 }
 
-/* Notification Animation */
+/* Ticket Cost & Additional Styles */
+.ticket-cost {
+    font-size: var(--font-size-sm);
+    color: var(--teal);
+    font-weight: 600;
+    margin-top: var(--spacing-xs);
+}
+
+.building-issues {
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--light-gray);
+}
+
+.issues-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.issue-count {
+    font-size: var(--font-size-xs);
+    color: var(--gray);
+}
+
+.critical-indicator {
+    font-size: var(--font-size-xs);
+    color: var(--p0-red);
+}
+
+.no-issues {
+    font-size: var(--font-size-xs);
+    color: #28a745;
+}
+
+/* Ticket Detail Modal Styles */
+.ticket-detail {
+    max-width: 100%;
+}
+
+.ticket-detail-header {
+    border-bottom: 1px solid var(--medium-gray);
+    padding-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.ticket-detail-header h2 {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+}
+
+.ticket-meta {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.ticket-status {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    background: var(--light-gray);
+    color: var(--dark-gray);
+}
+
+.ticket-detail-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.ticket-info h3,
+.ticket-evidence h3,
+.ticket-work-sessions h3,
+.ticket-materials h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--teal);
+}
+
+.work-session {
+    background: var(--light-gray);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.materials-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+
+.materials-table th,
+.materials-table td {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    text-align: left;
+    border-bottom: 1px solid var(--medium-gray);
+}
+
+.materials-table th {
+    background: var(--light-gray);
+    font-weight: 600;
+}
+
+.ticket-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: flex-end;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--medium-gray);
+}
+
+/* Responsive for ticket detail */
+@media (max-width: 768px) {
+    .ticket-detail-content {
+        grid-template-columns: 1fr;
+    }
+}
 @keyframes slideIn {
     from {
         transform: translateX(100%);

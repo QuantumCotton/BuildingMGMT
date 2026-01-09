@@ -3,9 +3,46 @@
 // Global State
 let currentPage = 'overview';
 let propertyData = {
-    name: 'KMJK PropertyOps',
-    address: '[Property Name / Address]',
-    buildings: [],
+    name: 'PSR HOMES LLC',
+    address: 'Multi-Property Portfolio Management',
+    buildings: [
+        {
+            id: 'RS1',
+            name: '4341 Riverside Dr',
+            address: 'Coral Springs, FL 33065',
+            units: ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4'],
+            unitDetails: ['2/1', '2/1', '2/1', '2/1'],
+            floors: 1,
+            type: '4-unit building'
+        },
+        {
+            id: 'AL1',
+            name: '624 Allen Ave',
+            address: 'Delray Beach, FL 33483',
+            units: ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4', 'Unit 5'],
+            unitDetails: ['2/1', '2/1', '2/1', '2/1', 'Efficiency'],
+            floors: 2,
+            type: '5-unit mixed building'
+        },
+        {
+            id: 'NW1',
+            name: '1853 NW 94th Ave',
+            address: 'Coral Springs, FL 33071',
+            units: ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4'],
+            unitDetails: ['2/2', '2/2', '2/2', '2/2'],
+            floors: 2,
+            type: '4-unit building'
+        },
+        {
+            id: 'LM1',
+            name: '1210 S M St',
+            address: 'Lake Worth, FL 33460',
+            units: ['Unit 1', 'Unit 2', 'Unit 3', 'Unit 4', 'Unit 5', 'Unit 6', 'Unit 7', 'Unit 8', 'Unit 9'],
+            unitDetails: ['1/1', '1/1', '1/1', '1/1', '1/1', '1/1', '1/1', '1/1', '1/1'],
+            floors: 3,
+            type: '9-unit building'
+        }
+    ],
     tickets: [],
     inspections: [],
     assets: [],
@@ -43,42 +80,72 @@ function loadSampleData() {
     propertyData.tickets = [
         {
             id: 'T001',
-            priority: 'P0',
-            category: 'plumbing',
-            building: 'B1',
-            unit: '204',
-            title: 'Active ceiling leak from unit above',
-            description: 'Water staining on ceiling, active dripping during rain',
-            status: 'assigned',
-            assignee: 'John Smith',
-            created: new Date('2026-01-05T14:30:00'),
-            evidence: { photos: 3, videos: 0 }
+            priority: 'P1',
+            category: 'flooring',
+            building: 'AL1',
+            unit: 'Unit 2',
+            title: 'Five-Star Flooring - Complete unit renovation',
+            description: 'Owner requested complete flooring replacement for Unit 2. Removing old carpet and installing new luxury vinyl plank throughout. This is priority project for owner investment.',
+            status: 'in_progress',
+            assignee: 'Josue',
+            created: new Date('2026-01-08T10:00:00'),
+            dueDate: new Date('2026-01-15T17:00:00'),
+            estimatedCost: 3500,
+            evidence: { photos: 8, videos: 2 },
+            workSessions: [
+                { date: new Date('2026-01-08T10:00:00'), hours: 4, notes: 'Removed old carpet, prepared subfloor' },
+                { date: new Date('2026-01-09T09:00:00'), hours: 6, notes: 'Started vinyl plank installation - living room complete' }
+            ],
+            materials: [
+                { item: 'Luxury Vinyl Plank', quantity: 500, unit: 'sq ft', cost: 2.50 },
+                { item: 'Underlayment', quantity: 500, unit: 'sq ft', cost: 0.50 },
+                { item: 'Transition strips', quantity: 3, unit: 'pieces', cost: 15.00 }
+            ]
         },
         {
             id: 'T002',
-            priority: 'P1',
-            category: 'hvac',
-            building: 'B2',
-            unit: '102',
-            title: 'AC not cooling properly',
-            description: 'Unit blowing warm air, tenant reports poor cooling',
-            status: 'new',
-            assignee: '',
-            created: new Date('2026-01-06T09:15:00'),
-            evidence: { photos: 0, videos: 0 }
+            priority: 'P2',
+            category: 'plumbing',
+            building: 'RS1',
+            unit: 'Unit 3',
+            title: 'Kitchen sink drain replacement',
+            description: 'Tenant reports slow draining sink, needs new P-trap and drain assembly',
+            status: 'assigned',
+            assignee: 'Maintenance Tech',
+            created: new Date('2026-01-07T14:30:00'),
+            dueDate: new Date('2026-01-10T12:00:00'),
+            estimatedCost: 150,
+            evidence: { photos: 2, videos: 0 }
         },
         {
             id: 'T003',
-            priority: 'P2',
+            priority: 'P0',
             category: 'electrical',
-            building: 'B3',
-            unit: 'Common Area - Hallway',
-            title: 'Flickering hallway lights',
-            description: 'Lights in second floor hallway flickering intermittently',
-            status: 'in_progress',
-            assignee: 'Mike Johnson',
-            created: new Date('2026-01-04T16:45:00'),
-            evidence: { photos: 2, videos: 1 }
+            building: 'NW1',
+            unit: 'Unit 1',
+            title: 'Breaker tripping frequently - potential fire hazard',
+            description: 'Tenant reports kitchen breaker tripping multiple times daily. Could be overloaded circuit or faulty breaker.',
+            status: 'new',
+            assignee: '',
+            created: new Date('2026-01-08T16:45:00'),
+            dueDate: new Date('2026-01-09T09:00:00'),
+            estimatedCost: 400,
+            evidence: { photos: 1, videos: 0 }
+        },
+        {
+            id: 'T004',
+            priority: 'P2',
+            category: 'hvac',
+            building: 'LM1',
+            unit: 'Unit 5',
+            title: 'AC not cooling properly',
+            description: 'Unit blowing warm air, tenant reports poor cooling during hot weather',
+            status: 'assigned',
+            assignee: 'HVAC Vendor',
+            created: new Date('2026-01-06T09:15:00'),
+            dueDate: new Date('2026-01-11T10:00:00'),
+            estimatedCost: 300,
+            evidence: { photos: 0, videos: 0 }
         }
     ];
     
@@ -87,20 +154,33 @@ function loadSampleData() {
         {
             id: 'I001',
             type: 'Weekly Grounds Walkthrough',
-            building: 'All',
+            building: 'All Properties',
             status: 'completed',
             completedDate: new Date('2026-01-05T08:00:00'),
             score: 'Pass',
-            nextDue: new Date('2026-01-12T08:00:00')
+            nextDue: new Date('2026-01-12T08:00:00'),
+            notes: 'All properties clean, minor trash issue at 624 Allen Ave resolved'
         },
         {
             id: 'I002',
             type: 'Monthly Building Envelope Check',
-            building: 'B1',
+            building: '4341 Riverside Dr',
             status: 'scheduled',
-            scheduledDate: new Date('2026-01-08T10:00:00'),
+            scheduledDate: new Date('2026-01-10T10:00:00'),
             score: null,
-            nextDue: new Date('2026-01-08T10:00:00')
+            nextDue: new Date('2026-01-10T10:00:00'),
+            notes: 'Check roof, gutters, and exterior walls after recent rain'
+        },
+        {
+            id: 'I003',
+            type: 'Unit Turn Inspection',
+            building: '624 Allen Ave',
+            unit: 'Unit 2',
+            status: 'completed',
+            completedDate: new Date('2026-01-08T14:00:00'),
+            score: 'Action Needed',
+            nextDue: null,
+            notes: 'Flooring project in progress - old carpet removed, subfloor prepared'
         }
     ];
     
@@ -131,7 +211,7 @@ function populateBuildingDropdowns() {
         propertyData.buildings.forEach(building => {
             const option = document.createElement('option');
             option.value = building.id;
-            option.textContent = building.name;
+            option.textContent = `${building.name} - ${building.address}`;
             select.appendChild(option);
         });
     });
@@ -209,6 +289,26 @@ function loadOverviewPage() {
         i.status === 'scheduled' && new Date(i.nextDue) <= new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     ).length;
     
+    // Calculate hours used this week (from work sessions)
+    let hoursUsedThisWeek = 0;
+    propertyData.tickets.forEach(ticket => {
+        if (ticket.workSessions) {
+            ticket.workSessions.forEach(session => {
+                const sessionDate = new Date(session.date);
+                const weekStart = new Date();
+                weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+                if (sessionDate >= weekStart) {
+                    hoursUsedThisWeek += session.hours;
+                }
+            });
+        }
+    });
+    
+    // Count vendor ETAs (tickets assigned to vendors)
+    const vendorETAs = propertyData.tickets.filter(t => 
+        t.assignee && (t.assignee.includes('Vendor') || t.assignee.includes('HVAC'))
+    ).length;
+    
     mainContent.innerHTML = `
         <div class="fade-in">
             <h1 class="page-title">Property Overview</h1>
@@ -232,11 +332,11 @@ function loadOverviewPage() {
                     <div class="status-tile-label">Inspections Due (7 days)</div>
                 </div>
                 <div class="status-tile">
-                    <div class="status-tile-number">24</div>
+                    <div class="status-tile-number">${hoursUsedThisWeek}</div>
                     <div class="status-tile-label">Hours Used This Week</div>
                 </div>
                 <div class="status-tile">
-                    <div class="status-tile-number">3</div>
+                    <div class="status-tile-number">${vendorETAs}</div>
                     <div class="status-tile-label">Vendor ETAs (72hrs)</div>
                 </div>
             </div>
@@ -245,21 +345,23 @@ function loadOverviewPage() {
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title">Today's Plan</h2>
-                    <p class="card-subtitle">January 6, 2026</p>
+                    <p class="card-subtitle">${new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 </div>
                 <div class="card-body">
                     <div class="plan-section">
                         <h3>Assigned Tickets</h3>
                         <ul class="plan-list">
-                            <li>John Smith: T001 - Active ceiling leak (B1/204)</li>
-                            <li>Mike Johnson: T003 - Flickering hallway lights (B3)</li>
+                            ${propertyData.tickets.filter(t => t.assignee && t.status !== 'completed').map(ticket => 
+                                `<li><strong>${ticket.assignee}:</strong> ${ticket.id} - ${ticket.title} (${getBuildingName(ticket.building)} / ${ticket.unit})</li>`
+                            ).join('')}
                         </ul>
                     </div>
                     <div class="plan-section">
                         <h3>Scheduled Vendor Visits</h3>
                         <ul class="plan-list">
-                            <li>10:00 AM - HVAC Tech: B2/102 AC repair</li>
-                            <li>2:00 PM - Plumber: B1/204 leak assessment</li>
+                            ${propertyData.tickets.filter(t => t.assignee && (t.assignee.includes('Vendor') || t.assignee.includes('HVAC'))).map(ticket => 
+                                `<li>${formatDate(ticket.dueDate)} - ${ticket.assignee}: ${getBuildingName(ticket.building)}/${ticket.unit} ${ticket.category}</li>`
+                            ).join('')}
                         </ul>
                     </div>
                     <div class="plan-section">
@@ -295,9 +397,7 @@ function loadOverviewPage() {
                 </div>
                 <div class="card-body">
                     <ul class="hot-spots-list">
-                        <li><strong>Bldg 1 / Unit 204:</strong> Recurring ceiling stain (3 incidents this month)</li>
-                        <li><strong>Building 3 / Dumpster Zone:</strong> Overflow issues (2x this week)</li>
-                        <li><strong>Building 2 / Unit 102:</strong> HVAC complaints (2nd time this quarter)</li>
+                        ${generateHotSpots()}
                     </ul>
                 </div>
             </div>
@@ -327,8 +427,8 @@ function loadMapBuildingsPage() {
             <div class="map-view">
                 <div class="map-placeholder">
                     <i class="fas fa-map-marked-alt"></i>
-                    <p>Property Map View</p>
-                    <small>Upload site map or use building list navigation</small>
+                    <p>PSR HOMES LLC - Portfolio Map</p>
+                    <small>4 Properties across Broward and Palm Beach Counties</small>
                 </div>
             </div>
             
@@ -336,9 +436,13 @@ function loadMapBuildingsPage() {
                 ${propertyData.buildings.map(building => `
                     <div class="building-card" onclick="openBuildingProfile('${building.id}')">
                         <h3>${building.name}</h3>
-                        <p>${building.units.length} units • ${building.floors} floors</p>
+                        <p>${building.address}</p>
+                        <p>${building.units.length} units (${building.type}) • ${building.floors} floors</p>
                         <div class="building-status">
-                            <span class="status-indicator ok">OK</span>
+                            <span class="status-indicator ${getBuildingStatus(building.id)}">${getBuildingStatusText(building.id)}</span>
+                        </div>
+                        <div class="building-issues">
+                            ${getBuildingIssues(building.id)}
                         </div>
                     </div>
                 `).join('')}
@@ -452,6 +556,9 @@ function loadInspectionsPage() {
 
 // Helper Functions
 function createTicketCard(ticket) {
+    const building = propertyData.buildings.find(b => b.id === ticket.building);
+    const buildingName = building ? building.name : ticket.building;
+    
     return `
         <div class="ticket-card priority-${ticket.priority}" onclick="openTicketDetail('${ticket.id}')">
             <div class="ticket-header">
@@ -460,8 +567,9 @@ function createTicketCard(ticket) {
             </div>
             <div class="ticket-content">
                 <h4>${ticket.title}</h4>
-                <p class="ticket-location">${ticket.building} / ${ticket.unit}</p>
+                <p class="ticket-location">${buildingName} / ${ticket.unit}</p>
                 <p class="ticket-assignee">${ticket.assignee || 'Unassigned'}</p>
+                ${ticket.estimatedCost ? `<p class="ticket-cost">Est: $${ticket.estimatedCost}</p>` : ''}
             </div>
             <div class="ticket-footer">
                 <span class="ticket-date">${formatDate(ticket.created)}</span>
@@ -581,7 +689,89 @@ function createTicket() {
 function openTicketDetail(ticketId) {
     const ticket = propertyData.tickets.find(t => t.id === ticketId);
     if (ticket) {
-        alert(`Ticket Detail View for ${ticketId}\n\nThis would open a detailed case file view with:\n- Full description\n- Evidence gallery\n- Timeline\n- Work logs\n- Closeout requirements`);
+        const building = propertyData.buildings.find(b => b.id === ticket.building);
+        const buildingName = building ? `${building.name} - ${building.address}` : ticket.building;
+        
+        let detailHTML = `
+            <div class="ticket-detail">
+                <div class="ticket-detail-header">
+                    <h2>${ticket.id} - ${ticket.title}</h2>
+                    <div class="ticket-meta">
+                        <span class="priority-badge ${ticket.priority}">${ticket.priority}</span>
+                        <span class="ticket-category">${ticket.category}</span>
+                        <span class="ticket-status">${ticket.status}</span>
+                    </div>
+                </div>
+                
+                <div class="ticket-detail-content">
+                    <div class="ticket-info">
+                        <h3>Location</h3>
+                        <p><strong>${buildingName}</strong></p>
+                        <p>Unit: ${ticket.unit}</p>
+                        
+                        <h3>Description</h3>
+                        <p>${ticket.description}</p>
+                        
+                        <h3>Assignment</h3>
+                        <p>Assigned to: ${ticket.assignee || 'Unassigned'}</p>
+                        <p>Created: ${formatDate(ticket.created)}</p>
+                        <p>Due: ${formatDate(ticket.dueDate)}</p>
+                        ${ticket.estimatedCost ? `<p>Estimated Cost: $${ticket.estimatedCost}</p>` : ''}
+                    </div>
+                    
+                    <div class="ticket-evidence">
+                        <h3>Evidence</h3>
+                        <p>📷 ${ticket.evidence.photos} photos • 🎥 ${ticket.evidence.videos} videos</p>
+                    </div>
+                    
+                    ${ticket.workSessions ? `
+                        <div class="ticket-work-sessions">
+                            <h3>Work Sessions</h3>
+                            ${ticket.workSessions.map(session => `
+                                <div class="work-session">
+                                    <p><strong>${formatDate(session.date)}</strong> - ${session.hours} hours</p>
+                                    <p>${session.notes}</p>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    
+                    ${ticket.materials ? `
+                        <div class="ticket-materials">
+                            <h3>Materials</h3>
+                            <table class="materials-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Unit Cost</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${ticket.materials.map(material => `
+                                        <tr>
+                                            <td>${material.item}</td>
+                                            <td>${material.quantity} ${material.unit}</td>
+                                            <td>$${material.cost}</td>
+                                            <td>$${(material.quantity * material.cost).toFixed(2)}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    ` : ''}
+                </div>
+                
+                <div class="ticket-actions">
+                    <button class="btn-primary" onclick="editTicket('${ticket.id}')">Edit Ticket</button>
+                    <button class="btn-secondary" onclick="closeTicketDetail()">Close</button>
+                </div>
+            </div>
+        `;
+        
+        // Show in modal or new page
+        showModal('Ticket Detail', detailHTML);
     }
 }
 
@@ -651,7 +841,95 @@ function showNotification(message, type = 'info') {
     }, 3000);
 }
 
-// Placeholder functions for remaining pages
+// Additional helper functions
+function getBuildingName(buildingId) {
+    const building = propertyData.buildings.find(b => b.id === buildingId);
+    return building ? building.name : buildingId;
+}
+
+function getBuildingStatus(buildingId) {
+    const tickets = propertyData.tickets.filter(t => t.building === buildingId && t.status !== 'completed');
+    if (tickets.some(t => t.priority === 'P0')) return 'critical';
+    if (tickets.some(t => t.priority === 'P1')) return 'warning';
+    return 'ok';
+}
+
+function getBuildingStatusText(buildingId) {
+    const status = getBuildingStatus(buildingId);
+    const statusTexts = {
+        'critical': 'Critical Issues',
+        'warning': 'Attention Needed', 
+        'ok': 'All Clear'
+    };
+    return statusTexts[status];
+}
+
+function getBuildingIssues(buildingId) {
+    const tickets = propertyData.tickets.filter(t => t.building === buildingId && t.status !== 'completed');
+    if (tickets.length === 0) return '<span class="no-issues">No active issues</span>';
+    
+    return `
+        <div class="issues-summary">
+            <span class="issue-count">${tickets.length} active issue${tickets.length > 1 ? 's' : ''}</span>
+            ${tickets.some(t => t.priority === 'P0') ? '<span class="critical-indicator">⚠️ P0</span>' : ''}
+        </div>
+    `;
+}
+
+function generateHotSpots() {
+    // Analyze tickets for repeat issues
+    const issuesByLocation = {};
+    
+    propertyData.tickets.forEach(ticket => {
+        const location = `${getBuildingName(ticket.building)} / ${ticket.unit}`;
+        if (!issuesByLocation[location]) {
+            issuesByLocation[location] = [];
+        }
+        issuesByLocation[location].push(ticket);
+    });
+    
+    const hotSpots = Object.entries(issuesByLocation)
+        .filter(([location, tickets]) => tickets.length > 1)
+        .map(([location, tickets]) => {
+            const categories = [...new Set(tickets.map(t => t.category))];
+            return `<li><strong>${location}:</strong> ${categories.join(', ')} issues (${tickets.length} incidents)</li>`;
+        });
+    
+    if (hotSpots.length === 0) {
+        return '<li>No repeat issues detected</li>';
+    }
+    
+    return hotSpots.join('');
+}
+
+function showModal(title, content) {
+    // Create a custom modal for detailed views
+    const modalHTML = `
+        <div id="customModal" class="modal active" style="max-width: 800px; max-height: 90vh;">
+            <div class="modal-header">
+                <h3>${title}</h3>
+                <button class="close-btn" onclick="closeModal('customModal')">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                ${content}
+            </div>
+        </div>
+    `;
+    
+    // Add modal to body
+    const modalContainer = document.createElement('div');
+    modalContainer.innerHTML = modalHTML;
+    document.body.appendChild(modalContainer.firstElementChild);
+    document.getElementById('modalOverlay').classList.add('active');
+}
+
+function closeTicketDetail() {
+    closeModal('customModal');
+}
+
+function editTicket(ticketId) {
+    alert(`Edit ticket ${ticketId} - This would open the edit form`);
+}
 function loadStormEventsPage() {
     document.getElementById('mainContent').innerHTML = '<h1>Storm Events</h1><p>Storm command center - to be implemented</p>';
 }
