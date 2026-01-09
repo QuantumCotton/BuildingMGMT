@@ -3,7 +3,8 @@
 // Global State
 let currentPage = 'overview';
 let propertyData = {
-    name: 'PSR HOMES LLC',
+    name: 'KMJK Property Management',
+    client: 'PSR HOMES LLC',
     address: 'Multi-Property Portfolio Management',
     buildings: [
         {
@@ -46,7 +47,12 @@ let propertyData = {
     tickets: [],
     inspections: [],
     assets: [],
-    vendors: []
+    vendors: [],
+    staff: {
+        owner: 'Josue',
+        developer: 'Chris',
+        technicians: ['Maintenance Tech', 'HVAC Vendor', 'Plumbing Vendor']
+    }
 };
 
 // Initialize Application
@@ -213,6 +219,26 @@ function populateBuildingDropdowns() {
             option.value = building.id;
             option.textContent = `${building.name} - ${building.address}`;
             select.appendChild(option);
+        });
+    });
+    
+    // Populate assignee dropdowns
+    const assigneeSelects = document.querySelectorAll('#ticketAssignee');
+    assigneeSelects.forEach(select => {
+        select.innerHTML = '<option value="">Unassigned</option>';
+        
+        // Add owner
+        const ownerOption = document.createElement('option');
+        ownerOption.value = propertyData.staff.owner;
+        ownerOption.textContent = `${propertyData.staff.owner} (Owner)`;
+        select.appendChild(ownerOption);
+        
+        // Add technicians
+        propertyData.staff.technicians.forEach(tech => {
+            const techOption = document.createElement('option');
+            techOption.value = tech;
+            techOption.textContent = tech;
+            select.appendChild(techOption);
         });
     });
 }
@@ -427,7 +453,7 @@ function loadMapBuildingsPage() {
             <div class="map-view">
                 <div class="map-placeholder">
                     <i class="fas fa-map-marked-alt"></i>
-                    <p>PSR HOMES LLC - Portfolio Map</p>
+                    <p>KMJK Property Management - PSR HOMES LLC Portfolio</p>
                     <small>4 Properties across Broward and Palm Beach Counties</small>
                 </div>
             </div>
@@ -446,6 +472,10 @@ function loadMapBuildingsPage() {
                         </div>
                     </div>
                 `).join('')}
+            </div>
+            
+            <div class="developer-credit">
+                <p><small>Dashboard developed by Chris for KMJK Property Management</small></p>
             </div>
         </div>
     `;
